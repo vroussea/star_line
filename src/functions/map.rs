@@ -1,4 +1,7 @@
 use std::fmt;
+use crate::functions::errors::CustomError;
+
+const RADIX: u32 = 10;
 
 #[derive(Clone)]
 pub struct Map {
@@ -8,14 +11,22 @@ pub struct Map {
 }
 
 impl Map {
-    pub fn new(start: String, target: String) -> Map {
-        let lights = Vec::new();
-        start.chars().for_each(|light| lights.push(light));
-        return Map {
-            lights: Vec::new(),
-            target: Vec::new(),
+    pub fn new(start: Vec<usize>, target: Vec<usize>) -> Result<Map, CustomError> {
+        // let lights = Vec::new();
+        // let target = Vec::new();
+        // for light in start_str.chars() {
+        //     lights.push(light.to_digit(RADIX).ok_or(CustomError::from("not a digit")));
+        // }
+        // start_str.chars().try_for_each(|light| -> Result<(), CustomError> {
+            
+        //     Ok(())
+        // }) ;
+        //target_str.chars().for_each(|light| target.push(light));
+        Ok(Map {
+            lights: start,
+            target,
             count: 0,
-        };
+        })
     }
 
     pub fn resolve(&mut self) -> &Self {
