@@ -1,8 +1,6 @@
 use std::fmt;
 use crate::functions::errors::CustomError;
 
-const RADIX: u32 = 10;
-
 #[derive(Clone)]
 pub struct Map {
     pub lights: Vec<usize>,
@@ -11,7 +9,7 @@ pub struct Map {
 }
 
 impl Map {
-    pub fn new(start: Vec<usize>, target: Vec<usize>) -> Result<Map, CustomError> {
+    pub fn new(start: Vec<usize>, target: Vec<usize>) -> Map {
         // let lights = Vec::new();
         // let target = Vec::new();
         // for light in start_str.chars() {
@@ -22,11 +20,11 @@ impl Map {
         //     Ok(())
         // }) ;
         //target_str.chars().for_each(|light| target.push(light));
-        Ok(Map {
+        Map {
             lights: start,
             target,
             count: 0,
-        })
+        }
     }
 
     pub fn resolve(&mut self) -> &Self {
@@ -44,7 +42,7 @@ impl fmt::Display for Map {
 impl fmt::Debug for Map {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let mut result = String::new();
-        for light in self.lights {
+        for light in &self.lights {
             result.push_str(&light.to_string());
         }
         result.push('\n');
