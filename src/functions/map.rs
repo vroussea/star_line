@@ -1,5 +1,4 @@
 use std::fmt;
-use crate::functions::errors::CustomError;
 
 #[derive(Clone)]
 pub struct Map {
@@ -10,16 +9,6 @@ pub struct Map {
 
 impl Map {
     pub fn new(start: Vec<usize>, target: Vec<usize>) -> Map {
-        // let lights = Vec::new();
-        // let target = Vec::new();
-        // for light in start_str.chars() {
-        //     lights.push(light.to_digit(RADIX).ok_or(CustomError::from("not a digit")));
-        // }
-        // start_str.chars().try_for_each(|light| -> Result<(), CustomError> {
-            
-        //     Ok(())
-        // }) ;
-        //target_str.chars().for_each(|light| target.push(light));
         Map {
             lights: start,
             target,
