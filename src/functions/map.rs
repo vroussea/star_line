@@ -1,23 +1,39 @@
 use std::fmt;
+use std::collections::VecDeque;
 
 #[derive(Clone)]
 pub struct Map {
-    pub lights: Vec<usize>,
-    pub target: Vec<usize>,
+    pub lights: VecDeque<usize>,
+    pub target: VecDeque<usize>,
     pub count: usize,
 }
 
 impl Map {
     pub fn new(start: Vec<usize>, target: Vec<usize>) -> Map {
         Map {
-            lights: start,
-            target,
+            lights: VecDeque::from(start),
+            target: VecDeque::from(target),
             count: 0,
         }
     }
 
+    pub fn invert_light(lights: &mut VecDeque<usize>) -> usize {
+        let count = 0;
+
+        count
+    }
+
     pub fn resolve(&mut self) {
-        
+        if self.lights.get(0) != self.target.get(0) {
+            Map::invert_light(&mut self.lights);
+        }
+        else {
+            self.lights.pop_front();
+            self.target.pop_front();
+        }
+        if self.lights.len() > 0 {
+            self.resolve();
+        } 
     }
 }
 
