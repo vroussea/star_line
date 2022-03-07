@@ -16,9 +16,8 @@ impl Map {
         }
     }
 
-    pub fn resolve(&mut self) -> &Self {
-
-        return self;
+    pub fn resolve(&mut self) {
+        
     }
 }
 
