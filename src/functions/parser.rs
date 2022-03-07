@@ -2,16 +2,18 @@ use crate::functions::errors;
 use std::io;
 use crate::functions::map::Map;
 
-pub fn into_vec(line: String) -> Result<Vec<usize>, errors::CustomError>{
+pub fn into_vec(line: String) -> Result<Vec<bool>, errors::CustomError>{
     let mut vec = Vec::new();
     for c in line.trim().chars() {
-        if c != '1' && c != '0' {
-            return Err(errors::CustomError::from("Only digits accepted: 1 or 0"));
+        if c == '1' {
+            vec.push(true);
         }
-        vec.push(c.to_digit(10).ok_or(errors::CustomError::from("Not a digit"))? as usize);
+        if c == '0' {
+            vec.push(false);
+        }
+        return Err(errors::CustomError::from("Only digits accepted: 1 or 0"));
     }
-    let len = line.len();
-    if len < 1 || len > 25 {
+    if line.len() < 1 || line.len() > 25 {
         return Err(errors::CustomError::from("Strings size (N) should be 1 <= N <= 25"));
     }
     Ok(vec)

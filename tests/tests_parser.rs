@@ -5,7 +5,7 @@ mod tests_parser {
     #[test]
     fn convert_simple_line() {
         let line = String::from("1001");
-        assert_eq!(parser::into_vec(line).unwrap(), vec![1usize, 0usize, 0usize, 1usize]);
+        assert_eq!(parser::into_vec(line).unwrap(), vec![true, false, false, true]);
     }
 
     #[test]
