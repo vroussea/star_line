@@ -12,7 +12,7 @@ pub fn into_vec(line: String) -> Result<Vec<usize>, errors::CustomError>{
     }
     let len = line.len();
     if len < 1 || len > 25 {
-        return Err(errors::CustomError::from("Strings N size should be 1 <= N <= 25"));
+        return Err(errors::CustomError::from("Strings size (N) should be 1 <= N <= 25"));
     }
     Ok(vec)
 }
