@@ -26,27 +26,43 @@ mod tests_map {
         assert_eq!(map.count, 877);
     }
 
-    // 0100
     #[test]
-    fn test_invert_easy() {
-        let mut slice = [false, true, false, false];
-
-        assert_eq!(Map::invert_light(&mut slice), 1);
+    fn new_target() {
+        assert_eq!(Map::new_target(3), vec![true, false, false]);
     }
 
-    // 00111
     #[test]
-    fn test_invert_medium() {
-        let mut slice = [false, false, true, true, true];
-
-        assert_eq!(Map::invert_light(&mut slice), 5);
+    fn new_target_empty() {
+        assert_eq!(Map::new_target(0), vec![]);
     }
 
-    // 01010101
     #[test]
-    fn test_invert_hard() {
-        let mut slice = [false, true, false, true, false, true, false, true];
+    fn rule_one_small_wrong_end() {
+        assert!(!Map::is_rule_one(&[false, false]));
+    }
 
-        assert_eq!(Map::invert_light(&mut slice), 50);
+    #[test]
+    fn rule_one_small_right() {
+        assert!(Map::is_rule_one(&[false, true]));
+    }
+
+    #[test]
+    fn rule_one_long_wrong_start() {
+        assert!(!Map::is_rule_one(&[true, false, false, false, false]));
+    }
+
+    #[test]
+    fn rule_one_long_wrong_middle() {
+        assert!(!Map::is_rule_one(&[false, true, true, false, false]));
+    }
+
+    #[test]
+    fn rule_one_long_wrong_end() {
+        assert!(!Map::is_rule_one(&[false, true, false, false, true]));
+    }
+
+    #[test]
+    fn rule_one_long_right() {
+        assert!(Map::is_rule_one(&[false, true, false, false, false]));
     }
 }

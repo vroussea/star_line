@@ -5,13 +5,11 @@ use crate::functions::map::Map;
 pub fn into_vec(line: String) -> Result<Vec<bool>, errors::CustomError>{
     let mut vec = Vec::new();
     for c in line.trim().chars() {
-        if c == '1' {
-            vec.push(true);
+        match c {
+            '1' => vec.push(true),
+            '0' => vec.push(false),
+            _ => return Err(errors::CustomError::from("Only digits accepted: 1 or 0")),
         }
-        if c == '0' {
-            vec.push(false);
-        }
-        return Err(errors::CustomError::from("Only digits accepted: 1 or 0"));
     }
     if line.len() < 1 || line.len() > 25 {
         return Err(errors::CustomError::from("Strings size (N) should be 1 <= N <= 25"));

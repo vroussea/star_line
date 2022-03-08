@@ -1,6 +1,8 @@
 pub mod functions;
 
 pub fn run() -> Result<(), functions::errors::CustomError> {
-    //let map = functions::map::Map::new();
+    let mut map = functions::parser::parse()?;
+    map.resolve();
+    println!("{}", map);
     return Ok(());
 }
