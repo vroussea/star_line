@@ -1,6 +1,5 @@
 use std::fmt;
 
-#[derive(Clone)]
 pub struct Map {
     pub lights: Vec<bool>,
     pub target: Vec<bool>,
@@ -38,31 +37,31 @@ impl Map {
         vec
     }
 
-    pub fn invert_light(lights: &mut[bool], target: &[bool]) -> usize {
-        if lights.len() == 0 {
-            return 0;
-        }
-        if lights[0] != target[0] {
-            if lights.len() == 1 || Map::is_rule_one(&lights) {
-                lights[0] = target[0];
-                return 1 + Map::invert_light(lights, target);
-            }
-            else {
-                let new_target = Map::new_target(lights.len() - 1);
-                return Map::invert_light(&mut lights[1..], &new_target) + Map::invert_light(lights, target);
-            }
-        }
-        else if lights != target {
-            return Map::invert_light(&mut lights[1..], &target[1..]);
+    fn invert_light(lights: &mut[bool], target: &[bool]) -> usize {
+        if lights.len() == 1 || Map::is_rule_one(&lights) {
+            lights[0] = target[0];
+            1 + Map::check_lights(lights, target)
         }
         else {
-            return 0;
+            let new_target = Map::new_target(lights.len() - 1);
+            Map::check_lights(&mut lights[1..], &new_target) + Map::check_lights(lights, target)
         }
-            // + Map::invert_light(lights, target);
+    }
+
+    pub fn check_lights(lights: &mut[bool], target: &[bool]) -> usize {
+        if lights[0] != target[0] {
+            Map::invert_light(lights, target)
+        }
+        else if lights != target {
+            Map::check_lights(&mut lights[1..], &target[1..])
+        }
+        else {
+            0
+        }
     }
 
     pub fn resolve(&mut self) {
-        self.count = Map::invert_light(&mut self.lights, &self.target);
+        self.count = Map::check_lights(&mut self.lights, &self.target);
     }
 }
 
