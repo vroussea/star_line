@@ -15,7 +15,7 @@ impl Map {
         }
     }
 
-    pub fn is_rule_one(slice: &[bool]) -> bool {
+    fn is_rule_one(slice: &[bool]) -> bool {
         if !slice[1] {
             return false;
         }
@@ -29,7 +29,7 @@ impl Map {
         true
     }
 
-    pub fn new_target(size: usize) -> Vec<bool> {
+    fn new_target(size: usize) -> Vec<bool> {
         let mut vec = vec![false; size];
         if size > 0 {
             vec[0] = true;
@@ -79,10 +79,10 @@ impl fmt::Debug for Map {
 }
 
 #[cfg(test)]
-mod tests_map {
+mod map {
     use super::*;
 
-    mod tests_resolve {
+    mod resolve {
         use super::*;
 
         // 1101 to 0100
@@ -123,43 +123,62 @@ mod tests_map {
         }
     }
 
-    #[test]
-    fn new_target() {
-        assert_eq!(Map::new_target(3), vec![true, false, false]);
+    mod new_target {
+        use super::*;
+
+        #[test]
+        fn new_target_small() {
+            assert_eq!(Map::new_target(3), vec![true, false, false]);
+        }
+
+        #[test]
+        fn new_target_big() {
+            assert_eq!(
+                Map::new_target(20),
+                vec![
+                    true, false, false, false, false, false, false, false, false, false, false,
+                    false, false, false, false, false, false, false, false, false
+                ]
+            );
+        }
+
+        #[test]
+        fn new_target_empty() {
+            assert_eq!(Map::new_target(0), vec![]);
+        }
     }
 
-    #[test]
-    fn new_target_empty() {
-        assert_eq!(Map::new_target(0), vec![]);
-    }
+    mod rule_one {
+        use super::*;
 
-    #[test]
-    fn rule_one_small_wrong_end() {
-        assert!(!Map::is_rule_one(&[false, false]));
-    }
+        #[test]
+        fn rule_one_small_wrong_end() {
+            assert!(!Map::is_rule_one(&[false, false]));
+        }
 
-    #[test]
-    fn rule_one_small_right() {
-        assert!(Map::is_rule_one(&[false, true]));
-    }
+        #[test]
+        fn rule_one_small_right() {
+            assert!(Map::is_rule_one(&[false, true]));
+        }
 
-    #[test]
-    fn rule_one_long_wrong_start() {
-        assert!(!Map::is_rule_one(&[true, false, false, false, false]));
-    }
+        #[test]
+        fn rule_one_long_wrong_start() {
+            assert!(!Map::is_rule_one(&[true, false, false, false, false]));
+        }
 
-    #[test]
-    fn rule_one_long_wrong_middle() {
-        assert!(!Map::is_rule_one(&[false, true, true, false, false]));
-    }
+        #[test]
+        fn rule_one_long_wrong_middle() {
+            assert!(!Map::is_rule_one(&[false, true, true, false, false]));
+        }
 
-    #[test]
-    fn rule_one_long_wrong_end() {
-        assert!(!Map::is_rule_one(&[false, true, false, false, true]));
-    }
+        #[test]
+        fn rule_one_long_wrong_end() {
+            assert!(!Map::is_rule_one(&[false, true, false, false, true]));
+        }
 
-    #[test]
-    fn rule_one_long_right() {
-        assert!(Map::is_rule_one(&[false, true, false, false, false]));
+        #[test]
+        fn rule_one_long_right() {
+            assert!(Map::is_rule_one(&[false, true, false, false, false]));
+        }
     }
 }

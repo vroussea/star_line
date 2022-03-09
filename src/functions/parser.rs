@@ -2,7 +2,7 @@ use crate::functions::errors;
 use crate::functions::map::Map;
 use std::io;
 
-pub fn into_vec(line: String) -> Result<Vec<bool>, errors::CustomError> {
+fn into_vec(line: String) -> Result<Vec<bool>, errors::CustomError> {
     let mut vec = Vec::new();
     for c in line.trim().chars() {
         match c {
