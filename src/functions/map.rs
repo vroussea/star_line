@@ -121,6 +121,20 @@ mod map {
             map.resolve();
             assert_eq!(map.count, 877);
         }
+
+        #[test]
+        fn test_resolve_same() {
+            let mut map = Map::new(
+                vec![
+                    true, true, false, false, true, false, false, true, false, false, false,
+                ],
+                vec![
+                    true, true, false, false, true, false, false, true, false, false, false,
+                ],
+            );
+            map.resolve();
+            assert_eq!(map.count, 0);
+        }
     }
 
     mod new_target {
